@@ -1,15 +1,18 @@
-def if_odd_index_cycle(list_sm: list[list[int]]) -> bool:
-    color = [0]**len(list_sm)
-    def dfs(v : int) -> bool:
+def has_odd_index_cycle(graph: list[list[int]]) -> bool:
+    state = [0] * len(graph)
+    
+    def dfs(v: int) -> bool:
         if v % 2 == 1:
             return False
-        color[v] = 1
-        for u in list_sm[v]:
-            if color[u] == 1 or (color[u] == 0 and dfs(u)):
+        state[v] = 1
+        for u in graph[v]:
+            if state[u] == 1 or (state[u] == 0 and dfs(u)):
                 return True
-        color[v] = 2
+        state[v] = 2
         return False
-    for v in range(0, len(list_sm), 2) :
-        if color[v] == 0 and dfs(v):
+
+    for v in range(0, len(graph), 2):
+        if state[v] == 0 and dfs(v):
             return True
+            
     return False

@@ -1,31 +1,47 @@
-def list_edge_to_list_sm(list_edge:list[tuple[int, int]], n) -> list[list[int]]:
-    list_sm = [[] for _ in range(n)]
-    for edge in list_edge:
-        list_sm[edge[0]].append(edge[1])
-    return list_sm
+def edge_list_to_adjacency_list(edge_list: list[tuple[int, int]], n: int) -> list[list[int]]:
+    adjacency_list = [[] for _ in range(n)]
+    for edge in edge_list:
+        adjacency_list[edge[0]].append(edge[1])
+    return adjacency_list
 
-def clother(list_edge: list[tuple[int, int]], n) -> list[int]:
-    list_sm = list_edge_to_list_sm(list_edge, n)
-    visit = [0] * n
-    ans = []
-    def dfs(v:int):
-        visit[v] = 1
-        for u in list_sm[v]:
-            if visit[u] == 0:
+def topological_order(edge_list: list[tuple[int, int]], total_nodes: int) -> list[int]:
+    adjacency_list = edge_list_to_adjacency_list(edge_list, total_nodes)
+    visited = [0] * total_nodes
+    sorted_nodes = []
+
+    def dfs(node: int):
+        visited[node] = 1  
+        for u in adjacency_list[node]:
+            if visited[u] == 0:
                 dfs(u)
-        ans.append(v)
-    for i in range(n):
-        if visit[i] == 0:
-            dfs(i)
-    ans.reverse()
-    return ans
+        sorted_nodes.append(node)
 
-dict_cl = {0: 'Пиджак', 1: 'Часы', 2: 'Брюки', 3: 'Рубашка', 4: 'Трусы', 5: 'Носки', 6: 'Туфли', 7: 'Галстук', 8:'Ремень'}
-list_edge = [(7, 0),(5, 6),(3, 8), (3, 7),
- (8, 0), (4, 2),(4, 6),(2, 6),
- (2, 8)]
+    for v in range(total_nodes):
+        if visited[v] == 0:
+            dfs(v)
 
-res = clother(list_edge, 9)
+    sorted_nodes.reverse()
+    return sorted_nodes
 
-for i in res:
-    print(dict_cl[i])
+clothing_dict = {
+    0: 'Пиджак', 
+    1: 'Часы', 
+    2: 'Брюки', 
+    3: 'Рубашка', 
+    4: 'Трусы', 
+    5: 'Носки', 
+    6: 'Туфли', 
+    7: 'Галстук', 
+    8: 'Ремень'
+}
+
+edge_list = [
+    (7, 0), (5, 6), (3, 8), (3, 7),
+    (8, 0), (4, 2), (4, 6), (2, 6),
+    (2, 8)
+]
+
+result = topological_order(edge_list, 9)
+
+for item in result:
+    print(clothing_dict[item])

@@ -1,10 +1,13 @@
 class Solution:
     def findJudge(self, n: int, trust: list[list[int]]) -> int:
-        out_in = [[0, 0] for _ in range(n)]
-        for edge in trust:
-            out_in[edge[0] - 1][0] += 1
-            out_in[edge[1] - 1][1] += 1
-        for i in range(n):
-            if out_in[i] == [0, n - 1]:
-                return i + 1
+        trust_count = [[0, 0] for _ in range(n)]
+        
+        for relationship in trust:
+            trust_count[relationship[0] - 1][0] += 1
+            trust_count[relationship[1] - 1][1] += 1
+            
+        for p in range(n):
+            if trust_count[p] == [0, n - 1]:
+                return p + 1
+        
         return -1

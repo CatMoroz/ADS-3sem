@@ -1,17 +1,19 @@
-def topological_sort(list_sm: list[list[int]], n: int):
-    visit = [0] * n
-    queue = list(range(n))
-    result = []
+def topological_sort(adjacency_list: list[list[int]], num_nodes: int):
+    visited = [0] * num_nodes
+    node_queue = list(range(num_nodes))
+    sorted_result = []
 
-    while (len(queue) != 0):
-        current = queue[0]
-        if (visit[current]):
-            queue.pop(0)
+    while node_queue:
+        v = node_queue[0]
+        
+        if visited[v]:
+            node_queue.pop(0)
             continue
-        if (all(map(lambda x: visit[x], list_sm[current]))):
-            visit[current] = 1
-            result.insert(0, queue.pop(0))
+        
+        if all(visited[u] for u in adjacency_list[v]):
+            visited[v] = 1
+            sorted_result.insert(0, node_queue.pop(0))
         else:
-            queue = list_sm[current] + queue
+            node_queue = adjacency_list[v] + node_queue
 
-    return result
+    return sorted_result

@@ -1,20 +1,20 @@
 class Solution:
     def findCircleNum(self, isConnected: list[list[int]]) -> int:
-        provinces = 0
+        province_count = 0
         n = len(isConnected)
-        visit = [0] * n
+        visited = [0] * n
 
         def dfs(v: int):
-            visit[v] = 1
-            for i in range(n):
-                if (isConnected[v][i] and not visit[i]):
-                    dfs(i)
+            visited[v] = 1
+            for u in range(n):
+                if isConnected[v][u] and not visited[u]:
+                    dfs(u)
 
-        for i in range(n):
-            if (visit[i]):
+        for v in range(n):
+            if visited[v]:
                 continue
             else:
-                provinces += 1
-                dfs(i)
+                province_count += 1
+                dfs(v)
 
-        return provinces
+        return province_count

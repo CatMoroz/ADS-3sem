@@ -1,41 +1,41 @@
-def list_sm_to_matrix_sm(list_sm:list[list[int]], n: int) -> list[list[int]]:
-    matrix_sm = [[0] for _ in range(n)]
-    for i in n:
-        for j in list_sm[i]:
-            matrix_sm[i][j] = 1
-    return matrix_sm
+def adjacency_list_to_matrix(adjacency_list: list[list[int]], n: int) -> list[list[int]]:
+    adjacency_matrix = [[0] * n for _ in range(n)]
+    for v in range(n):
+        for u in adjacency_list[v]:
+            adjacency_matrix[v][u] = 1
+    return adjacency_matrix
 
-def list_sm_to_list_edge(list_sm:list[list[int]], n: int) -> list[tuple[int, int]]:
-    list_edge = []
-    for i in n:
-        for j in list_sm[i]:
-            list_edge.append((i, j))
-    return list_edge
+def adjacency_list_to_edge_list(adjacency_list: list[list[int]], n: int) -> list[tuple[int, int]]:
+    edge_list = []
+    for v in range(n):
+        for u in adjacency_list[v]:
+            edge_list.append((v, u))
+    return edge_list
 
-def matrix_sm_to_list_edge(matrix_sm:list[list[int]], n: int) -> list[tuple[int, int]]:
-    list_edge = []
-    for i in range(n):
-        for j in range(len(matrix_sm[i])):
-            if j:
-                list_edge.append((i, j))
-    return list_edge
+def matrix_to_edge_list(adjacency_matrix: list[list[int]], n: int) -> list[tuple[int, int]]:
+    edge_list = []
+    for v in range(n):
+        for u in range(len(adjacency_matrix[v])):
+            if adjacency_matrix[v][u]:
+                edge_list.append((v, u))
+    return edge_list
 
-def matrix_sm_to_list_sm(matrix_sm:list[list[int]], n: int) -> list[list[int]]:
-    list_sm = [[] for _ in range(n)]
-    for i in range(n):
-        for j in range(len(matrix_sm[i])):
-            if j:
-                list_sm[i].append(j)
-    return list_sm
+def matrix_to_adjacency_list(adjacency_matrix: list[list[int]], n: int) -> list[list[int]]:
+    adjacency_list = [[] for _ in range(n)]
+    for v in range(n):
+        for u in range(len(adjacency_matrix[v])):
+            if adjacency_matrix[v][u]:
+                adjacency_list[v].append(u)
+    return adjacency_list
 
-def list_edge_to_list_sm(list_edge:list[tuple[int, int]], n: int) -> list[list[int]]:
-    list_sm = [[] for _ in range(n)]
-    for edge in list_edge:
-        list_sm[edge[0]].append(edge[1])
-    return list_sm
+def edge_list_to_adjacency_list(edge_list: list[tuple[int, int]], n: int) -> list[list[int]]:
+    adjacency_list = [[] for _ in range(n)]
+    for edge in edge_list:
+        adjacency_list[edge[0]].append(edge[1])
+    return adjacency_list
 
-def list_edge_to_matrix_sm(list_edge:list[tuple[int, int]], n: int) -> list[list[int]]:
-    matrix_sm = [[0] for _ in range(n)]
-    for edge in list_edge:
-        matrix_sm[edge[0]][edge[1]] = 1
-    return matrix_sm
+def edge_list_to_matrix(edge_list: list[tuple[int, int]], n: int) -> list[list[int]]:
+    adjacency_matrix = [[0] * n for _ in range(n)]
+    for edge in edge_list:
+        adjacency_matrix[edge[0]][edge[1]] = 1
+    return adjacency_matrix
